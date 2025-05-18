@@ -81,7 +81,7 @@ server.port=8085
 | GET    | `/api/pedidos/cliente/{email}`                 | Retorna todos los pedidos de un cliente.                             |
 | GET    | `/api/pedidos/estado/{estado}`                 | Filtra los pedidos por estado (ej: `EN_CAMINO`, `ENTREGADO`, etc.).  |
 | PUT    | `/api/pedidos/{id}/estado?estado=NUEVO_ESTADO` | Actualiza el estado de un pedido.                                    |
-| PUT    | `PUT /api/pedidos/{id}/cancelar`               | Cambia el estado del pedido a `CANCELADO`, si aún no está entregado. |
+| PUT    | `/api/pedidos/{id}/cancelar`                   | Cambia el estado del pedido a `CANCELADO`, si aún no está entregado. |
 
 
 ## Estados posibles del pedido
