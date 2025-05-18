@@ -62,6 +62,9 @@ server.port=8085
 
 ## Endpoints disponibles
 
+Importa la colección incluida:  
+**`EcoMarket - Pedido Logística.postman_collection.json`**
+
 | Método  | Ruta                                         | Descripción                                                       |
 |---------|----------------------------------------------|-------------------------------------------------------------------|
 | POST    | `/api/pedidos`                       | Crea un nuevo pedido a partir de una venta. Usado por `venta-service`.    |
