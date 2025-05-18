@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "ef9075f5-6313-4a83-bc1b-668e3ebc6312",
+		"name": "EcoMarket - Pedido Logística",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "43955048"
+	},
+	"item": [
+		{
+			"name": "Crear Pedido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"idVenta\": 1,\n  \"emailCliente\": \"cliente@example.com\",\n  \"direccionDespacho\": \"Av. Ejemplo 123, Santiago\"\n}"
+				},
+				"url": "http://localhost:8085/api/pedidos"
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener Pedido por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/api/pedidos/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Pedidos por Cliente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8085/api/pedidos/cliente/cliente@example.com"
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar Estado de Pedido",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8085/api/pedidos/1/estado?estado=EN_CAMINO",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8085",
+					"path": [
+						"api",
+						"pedidos",
+						"1",
+						"estado"
+					],
+					"query": [
+						{
+							"key": "estado",
+							"value": "EN_CAMINO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar Pedido",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": "http://localhost:8085/api/pedidos/1/cancelar"
+			},
+			"response": []
+		}
+	]
+}
