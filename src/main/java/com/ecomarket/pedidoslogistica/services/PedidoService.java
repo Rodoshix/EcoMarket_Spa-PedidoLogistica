@@ -10,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +24,9 @@ public class PedidoService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${ecomarket.notificaciones.url}")
+    private String urlNotificacion;
+    
     // Crear un nuevo pedido
     public Pedido crearPedido(Pedido pedido) {
         pedido.setFechaCreacion(LocalDateTime.now());
@@ -42,7 +46,7 @@ public class PedidoService {
         HttpEntity<NotificacionDTO> request = new HttpEntity<>(dto, headers);
 
         try {
-            restTemplate.postForEntity("http://localhost:8087/api/notificaciones/enviar", request, String.class);
+            restTemplate.postForEntity(urlNotificacion, request, String.class);
             System.out.println("Correo enviado a: " + pedido.getEmailCliente());
         } catch (Exception e) {
             System.err.println("Error al enviar notificación: " + e.getMessage());
