@@ -62,6 +62,7 @@ server.port=8085
 ## Microservicios integrados
 
 - **venta-service** (`localhost:8084`): envía los pedidos después de cada venta confirmada.
+- **notificacion-service** (`localhost:8087`): envía notificaciones por crear pedido (Falta implementar notificacion al cambiar estado).
 
 ---
 
