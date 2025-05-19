@@ -12,16 +12,20 @@ Este microservicio gestiona el ciclo de vida de los pedidos en EcoMarket SPA, de
 - Spring Data JPA
 - Lombok
 - MySQL
+- Mailtrap (SMTP)
 
 ---
 
 ## Funcionalidades
 
-- Crear un pedido asociado a una venta.
-- Registrar dirección de despacho y fecha de creación.
-- Actualizar estado del pedido (PENDIENTE, EN_CAMINO, ENTREGADO, CANCELADO, etc.).
-- Buscar pedidos por ID, cliente o estado.
-- Cancelar pedidos antes de la entrega.
+- Crear pedidos con fecha y estado inicial `PENDIENTE`
+- Cambiar el estado de un pedido (EN_PREPARACION, EN_REPARTO, ENTREGADO, CANCELADO)
+- Buscar pedidos por:
+  - ID
+  - Cliente (email)
+  - Estado
+- Cancelar pedidos (si no han sido entregados)
+- Envío automático de notificación por correo usando Mailtrap
 
 ---
 
@@ -49,6 +53,14 @@ spring.jpa.show-sql=true
 
 spring.jpa.properties.hibernate.format_sql=true
 server.port=8085
+
+# Mailtrap (notificaciones)
+spring.mail.host=sandbox.smtp.mailtrap.io
+spring.mail.port=2525
+spring.mail.username=TU_USUARIO_MAILTRAP
+spring.mail.password=TU_PASSWORD_MAILTRAP
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 
 ---
