@@ -1,10 +1,15 @@
 package com.ecomarket.pedidoslogistica.services;
 
+import com.ecomarket.pedidoslogistica.dto.NotificacionDTO;
 import com.ecomarket.pedidoslogistica.model.EstadoPedido;
 import com.ecomarket.pedidoslogistica.model.Pedido;
 import com.ecomarket.pedidoslogistica.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,11 +20,35 @@ public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     // Crear un nuevo pedido
     public Pedido crearPedido(Pedido pedido) {
         pedido.setFechaCreacion(LocalDateTime.now());
         pedido.setEstado(EstadoPedido.PENDIENTE);
-        return pedidoRepository.save(pedido);
+
+        Pedido guardado = pedidoRepository.save(pedido);
+
+        // Enviar notificación
+        NotificacionDTO dto = new NotificacionDTO();
+        dto.setDestinatario(pedido.getEmailCliente());
+        dto.setAsunto("EcoMarket - Pedido creado");
+        dto.setCuerpo("Tu pedido ha sido recibido y está en preparación. ID Pedido: " + guardado.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<NotificacionDTO> request = new HttpEntity<>(dto, headers);
+
+        try {
+            restTemplate.postForEntity("http://localhost:8086/api/notificaciones/enviar", request, String.class);
+            System.out.println("Correo enviado a: " + pedido.getEmailCliente());
+        } catch (Exception e) {
+            System.err.println("Error al enviar notificación: " + e.getMessage());
+        }
+
+        return guardado;
     }
 
     // Cambiar estado de un pedido
