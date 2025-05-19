@@ -42,7 +42,7 @@ public class PedidoService {
         HttpEntity<NotificacionDTO> request = new HttpEntity<>(dto, headers);
 
         try {
-            restTemplate.postForEntity("http://localhost:8086/api/notificaciones/enviar", request, String.class);
+            restTemplate.postForEntity("http://localhost:8087/api/notificaciones/enviar", request, String.class);
             System.out.println("Correo enviado a: " + pedido.getEmailCliente());
         } catch (Exception e) {
             System.err.println("Error al enviar notificación: " + e.getMessage());
