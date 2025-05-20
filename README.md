@@ -1,6 +1,6 @@
 # EcoMarket SPA - Microservicio Pedidos y Logística
 
-Este microservicio gestiona el ciclo de vida de los pedidos en EcoMarket SPA, desde su creación hasta la entrega. Es activado automáticamente por `venta-service` tras una venta.
+Este microservicio gestiona el ciclo de vida de los pedidos en EcoMarket SPA del proyecto semestral FullStack_1, desde su creación hasta la entrega. Es activado automáticamente por `venta-service` tras una venta.
 
 ---
 
