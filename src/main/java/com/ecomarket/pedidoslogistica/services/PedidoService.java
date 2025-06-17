@@ -76,7 +76,8 @@ public class PedidoService {
 
     // Buscar por estado
     public List<Pedido> buscarPorEstado(String estado) {
-        return pedidoRepository.findByEstado(estado);
+        EstadoPedido estadoEnum = EstadoPedido.valueOf(estado); // convierte String a enum
+        return pedidoRepository.findByEstado(estadoEnum);
     }
 
     // Cancelar pedido
@@ -90,5 +91,10 @@ public class PedidoService {
 
         pedido.setEstado(EstadoPedido.CANCELADO);
         pedidoRepository.save(pedido);
+    }
+
+    // Listar todos los pedidos
+    public List<Pedido> listarTodos() {
+        return pedidoRepository.findAll();
     }
 }
