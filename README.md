@@ -26,6 +26,19 @@ Este microservicio gestiona el ciclo de vida de los pedidos en EcoMarket SPA del
   - Estado
 - Cancelar pedidos (si no han sido entregados)
 - Envío automático de notificación por correo usando Mailtrap
+- Versión alternativa con HATEOAS (`/api/v2/pedidos`)
+
+---
+
+## Documentación Swagger
+
+La API está documentada con OpenAPI 3 y disponible en:
+
+```
+http://localhost:8085/swagger-ui/index.html
+```
+
+Incluye descripción de rutas, parámetros, esquemas y códigos de respuesta para todos los endpoints.
 
 ---
 
@@ -38,28 +51,7 @@ Este microservicio gestiona el ciclo de vida de los pedidos en EcoMarket SPA del
 - Usuario: `root`
 - Contraseña: *(vacía por defecto en XAMPP)*
 
-### Archivo `application.properties`
-
-```properties
-spring.application.name=pedidos-logistica
-
-spring.datasource.url=jdbc:mysql://localhost:3306/pedidos_db?useSSL=false&serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=
-
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-
-spring.jpa.properties.hibernate.format_sql=true
-server.port=8085
-
-ecomarket.notificaciones.url=http://localhost:8087/api/notificaciones/enviar 
-
-```
-
 ---
-
 
 ## Microservicios integrados
 
@@ -104,3 +96,32 @@ Importa la colección incluida:
 - `CANCELADO`
 
 ---
+
+## HATEOAS (Versión 2)
+
+El controlador `/api/v2/pedidos` expone los mismos datos que la versión clásica, pero utilizando `EntityModel` y enlaces navegables (`_links`), facilitando la exploración de la API REST desde el cliente.
+
+---
+
+## Pruebas realizadas
+
+Todas las pruebas se ejecutan bajo el perfil `test`, con base de datos H2 en memoria.
+
+| Tipo de prueba       | Clase                           | Descripción                                     |
+|----------------------|----------------------------------|-------------------------------------------------|
+| Unitarias            | `PedidoServiceTest`             | Verifica la lógica del servicio con Mockito     |
+| Unitarias (API V1)   | `PedidoControllerTest`          | Valida endpoints del controlador clásico        |
+| Unitarias (API V2)   | `PedidoControllerV2Test`        | Verifica la respuesta HATEOAS con MockMvc       |
+| Integración          | `PedidoIntegrationTest`         | Usa `@SpringBootTest` + H2 para probar la app   |
+| Rendimiento          | `PedidoPerformanceTest`         | Mide el tiempo de creación y búsqueda           |
+
+---
+
+## Ejecutar pruebas
+
+```bash
+./mvnw test -Dspring.profiles.active=test
+```
+
+---
+
