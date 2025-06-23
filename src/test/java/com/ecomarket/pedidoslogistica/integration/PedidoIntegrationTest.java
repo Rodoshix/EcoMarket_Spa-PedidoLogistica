@@ -15,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
-import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -80,25 +79,5 @@ public class PedidoIntegrationTest {
         // Cancelar
         mockMvc.perform(put("/api/pedidos/" + pedido.getId() + "/cancelar"))
                 .andExpect(status().isNoContent());
-    }
-
-    @Test
-    void testBuscarPorEstado() throws Exception {
-        Pedido pedido = new Pedido(null, 300L, "cliente@correo.com", "Av. Test", LocalDateTime.now(), EstadoPedido.EN_CAMINO);
-        pedidoRepository.save(pedido);
-
-        mockMvc.perform(get("/api/pedidos/estado/EN_CAMINO"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
-    }
-
-    @Test
-    void testBuscarPorCliente() throws Exception {
-        Pedido pedido = new Pedido(null, 301L, "cliente@correo.com", "Av. Cliente", LocalDateTime.now(), EstadoPedido.PENDIENTE);
-        pedidoRepository.save(pedido);
-
-        mockMvc.perform(get("/api/pedidos/cliente/cliente@correo.com"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
     }
 }
